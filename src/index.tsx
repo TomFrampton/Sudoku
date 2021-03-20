@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { ThemeProvider } from 'styled-components';
+
 import * as serviceWorkerRegistration from './core/serviceWorkerRegistration';
 import reportWebVitals from './core/reportWebVitals';
 
 import { Grid } from './components/grid';
 
-import { GlobalStyles } from './styles';
+import { GlobalStyles, defaultTheme } from './styles';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <GlobalStyles />
-    <Grid></Grid>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <ThemeProvider theme={defaultTheme}>
+            <GlobalStyles />
+            <Grid></Grid>
+        </ThemeProvider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
