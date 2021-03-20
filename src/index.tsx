@@ -8,13 +8,18 @@ import reportWebVitals from './core/reportWebVitals';
 
 import { Grid } from './components/grid';
 
-import { GlobalStyles, defaultTheme } from './styles';
+import { GlobalStyles, defaultTheme, Card, Content, Title } from './styles';
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={defaultTheme}>
             <GlobalStyles />
-            <Grid></Grid>
+            <Content data-cy="content">
+                <Title data-cy="title">Tom's Sudoku App</Title>
+                <Card data-cy="card">
+                    Test
+                </Card>
+            </Content>
         </ThemeProvider>
     </React.StrictMode>,
     document.getElementById('root')
