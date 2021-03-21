@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import * as serviceWorkerRegistration from './core/serviceWorkerRegistration';
 import reportWebVitals from './core/reportWebVitals';
 
-import { Grid } from './components/grid';
+import { Grid } from './components';
 
 import { GlobalStyles, defaultTheme, Card, Content, Title } from './styles';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
             <Content data-cy="content">
                 <Title data-cy="title">Tom's Sudoku App</Title>
                 <Card data-cy="card">
-                    Test
+                    <Grid></Grid>
                 </Card>
             </Content>
         </ThemeProvider>
