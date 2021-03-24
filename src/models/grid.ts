@@ -88,6 +88,28 @@ export class Grid {
         return true;
     }
 
+    isLegal() {
+        for (let r = 0 as INDEX; r < 9; r++) {
+            for (let c = 0 as INDEX; c < 9; c++) {
+                const value = this.getValue(r, c);
+
+                if (value !== 0) {
+                    const storedValue = value;
+
+                    this.setValue(r, c, 0); // Temporarily remove value so we can check if it still exists
+
+                    if (this.isInRow(r, storedValue) || this.isInColumn(c, storedValue) || this.isInSquare(r, c, storedValue)) {
+                        return false;
+                    }
+
+                    this.setValue(r, c, storedValue); // Reinstate value
+                }
+            }
+        }
+
+        return true;
+    }
+
     clone() {
         return new Grid(this.grid);
     }
