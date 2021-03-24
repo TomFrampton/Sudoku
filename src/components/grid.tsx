@@ -4,6 +4,19 @@ import styled, { css } from 'styled-components';
 
 import { Block } from './block';
 
+import { fillGrid } from 'utils';
+import { Grid as GridModel } from 'models/grid';
+
+const before = performance.now();
+
+let grid = new GridModel();
+fillGrid(grid);
+console.log(grid);
+
+const after = performance.now();
+
+console.log(`Time taken: ${after - before}`);
+
 export const Grid: FC = () => {
     return (
         <Container data-cy="grid-container">
