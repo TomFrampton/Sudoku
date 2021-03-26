@@ -4,38 +4,13 @@ import styled, { css } from 'styled-components';
 
 import { Block } from './block';
 
-import { fillGrid } from 'utils';
+import { createFullGrid } from 'utils';
 import { Grid as GridModel } from 'models/grid';
 
-const before = performance.now();
-
-for (var i = 0; i < 100; i++) {
-    // Hard grid
-    let grid = new GridModel([
-        [0, 0, 0, 0, 7, 4, 3, 1, 6],
-        [0, 0, 0, 6, 0, 3, 8, 4, 0],
-        [0, 0, 0, 0, 0, 8, 5, 0, 0],
-        [7, 2, 5, 8, 0, 0, 0, 3, 4],
-        [0, 0, 0, 0, 3, 0, 0, 5, 0],
-        [0, 0, 0, 0, 0, 2, 7, 9, 8],
-        [0, 0, 8, 9, 4, 0, 0, 0, 0],
-        [0, 4, 0, 0, 8, 5, 9, 0, 0],
-        [9, 7, 1, 3, 2, 6, 4, 8, 5]
-    ]);
-
-    fillGrid(grid);
+export const Grid: FC = () => {
+    var grid = createFullGrid();
     console.log(grid);
 
-    // if (!grid.isComplete()) {
-    //     throw new Error();
-    // }
-}
-
-const after = performance.now();
-
-console.log(`Time taken: ${after - before}`);
-
-export const Grid: FC = () => {
     return (
         <Container data-cy="grid-container">
             {Children.toArray(
