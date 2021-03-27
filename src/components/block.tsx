@@ -1,14 +1,27 @@
 import { FC } from 'react';
+import { useSelector } from 'react-redux';
+
 import styled, { css } from 'styled-components';
 
+import { IReducerState } from 'reducers';
+import { N, INDEX } from 'typings/numbers';
+
 interface IProps {
-    rowIndex: number;
-    colIndex: number;
+    rowIndex: INDEX;
+    colIndex: INDEX;
+}
+
+interface IState {
+    value: N;
 }
 
 export const Block: FC<IProps> = ({ rowIndex, colIndex }) => {
+    const state = useSelector<IReducerState, IState>(({ grid }) => ({
+        value: grid ? grid.getValue(rowIndex, colIndex) : 0
+    }));
+
     return (
-        <Container data-cy={`grid-block-${rowIndex}-${colIndex}`}>{rowIndex}{colIndex}</Container>
+        <Container data-cy={`grid-block-${rowIndex}-${colIndex}`}>{(state && state.value) || ''}</Container>
     );
 }
 

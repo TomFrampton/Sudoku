@@ -1,5 +1,5 @@
 import { Grid } from "models";
 
-export interface IState {
+export interface IReducerState {
     grid?: Grid
 }
