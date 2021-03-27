@@ -1,15 +1,21 @@
-import { FC, Children } from 'react';
+import { FC, Children, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AnyAction, Dispatch } from 'redux';
 
 import styled, { css } from 'styled-components';
 
+import { createGrid } from 'reducers';
+
 import { Block } from './block';
 
-import { createFullGrid } from 'utils';
-import { Grid as GridModel } from 'models/grid';
-
 export const Grid: FC = () => {
-    var grid = createFullGrid();
-    console.log(grid);
+    const dispatch = useDispatch<Dispatch<AnyAction>>();
+
+    const create = useCallback(() => dispatch(createGrid()), [dispatch]);
+
+    useEffect(() => {
+        create();
+    }, [create]);
 
     return (
         <Container data-cy="grid-container">

@@ -1,25 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import { ThemeProvider } from 'styled-components';
 
-import * as serviceWorkerRegistration from './core/serviceWorkerRegistration';
-import reportWebVitals from './core/reportWebVitals';
+import * as serviceWorkerRegistration from 'core/serviceWorkerRegistration';
+import reportWebVitals from 'core/reportWebVitals';
+import { configureStore } from 'core/configure-store';
 
-import { Grid } from './components';
+import { Grid } from 'components';
+import { GlobalStyles, defaultTheme, Card, Content, Title } from 'styles';
 
-import { GlobalStyles, defaultTheme, Card, Content, Title } from './styles';
+const store = configureStore();
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={defaultTheme}>
             <GlobalStyles />
-            <Content data-cy="content">
-                <Title data-cy="title">Tom's Sudoku App</Title>
-                <Card data-cy="card">
-                    <Grid></Grid>
-                </Card>
-            </Content>
+            <Provider store={store}>
+                <Content data-cy="content">
+                    <Title data-cy="title">Tom's Sudoku App</Title>
+                    <Card data-cy="card">
+                        <Grid></Grid>
+                    </Card>
+                </Content>
+            </Provider>
         </ThemeProvider>
     </React.StrictMode>,
     document.getElementById('root')
