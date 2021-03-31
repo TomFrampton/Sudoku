@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch, AnyAction } from 'redux';
 
 import styled, { css } from 'styled-components';
 
-import { IReducerState } from 'reducers';
+import { IReducerState, selectBlock } from 'reducers';
 import { N, INDEX } from 'typings/numbers';
 
 interface IProps {
@@ -13,22 +14,41 @@ interface IProps {
 
 interface IState {
     value: N;
+    isActive: boolean
 }
 
 export const Block: FC<IProps> = ({ rowIndex, colIndex }) => {
-    const state = useSelector<IReducerState, IState>(({ grid }) => ({
-        value: grid ? grid.getValue(rowIndex, colIndex) : 0
+    const state = useSelector<IReducerState, IState>(({ grid, selectedBlock }) => ({
+        value: grid ? grid.getValue(rowIndex, colIndex) : 0,
+        isActive: !!selectedBlock && selectedBlock.rowIndex === rowIndex && selectedBlock.colIndex === colIndex
     }));
 
+    const dispatch = useDispatch<Dispatch<AnyAction>>();
+
+    function handleClick() {
+        if (!state.isActive) {
+            dispatch(selectBlock({ rowIndex, colIndex }));
+        }
+    }
+
     return (
-        <Container data-cy={`grid-block-${rowIndex}-${colIndex}`}>{(state && state.value) || ''}</Container>
+        <Container
+            data-cy={`grid-block-${rowIndex}-${colIndex}`}
+            isActive={state.isActive}
+            onClick={handleClick}>
+                {(state && state.value) || ''}
+        </Container>
     );
 }
 
-const Container = styled.div`
-    ${({ theme }) => css`
+interface IContainerProps {
+    isActive?: boolean
+}
+
+const Container = styled.div<IContainerProps>`
+    ${({ isActive, theme }) => css`
         align-items: center;
-        background-color: ${theme.colours.white};
+        background-color: ${isActive ? theme.colours.blue : theme.colours.white};
         border: 1px solid ${theme.colours.black};
         cursor: pointer;
         display: flex;

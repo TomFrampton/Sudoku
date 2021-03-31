@@ -7,4 +7,9 @@ export type N =  NUMBER | PLACEHOLDER;
 export type ROW = [N, N, N, N, N, N, N, N, N];
 export type GRID = [ROW, ROW, ROW, ROW, ROW, ROW, ROW, ROW, ROW];
 
+export type BLOCK_COORDS = {
+    rowIndex: INDEX,
+    colIndex: INDEX
+}
+
 
