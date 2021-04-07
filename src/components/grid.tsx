@@ -5,20 +5,33 @@ import { AnyAction, Dispatch } from 'redux';
 import useMousetrap from 'react-hook-mousetrap';
 import styled, { css } from 'styled-components';
 
-import { createGrid, IReducerState, selectBlock } from 'reducers';
-import { BLOCK_COORDS, INDEX } from 'typings/numbers';
+import { Grid as GridModel } from 'models';
+import { createGrid, IReducerState, selectBlock, fillBlock } from 'reducers';
+import { BLOCK_COORDS, INDEX, NUMBER } from 'typings/numbers';
 
 import { Block } from './block';
 
+
 interface IState {
-    selectedBlock?: BLOCK_COORDS
+    selectedBlock?: BLOCK_COORDS,
+    workingGrid?: GridModel
 }
 
 export const Grid: FC = () => {
     const dispatch = useDispatch<Dispatch<AnyAction>>();
-    const state = useSelector<IReducerState, IState>(({ selectedBlock }) => ({ selectedBlock }));
+    const state = useSelector<IReducerState, IState>(({ selectedBlock, workingGrid }) => ({ selectedBlock, workingGrid }));
 
     const create = useCallback(() => dispatch(createGrid()), [dispatch]);
+
+    const fill = useCallback((inputtedNumber: NUMBER) => {
+        if (state.selectedBlock && state.workingGrid) {
+            const { rowIndex, colIndex } = state.selectedBlock;
+
+            if (state.workingGrid.getValue(rowIndex, colIndex) === 0) {
+                dispatch(fillBlock(state.selectedBlock, inputtedNumber));
+            }
+        }
+    }, [dispatch, state.selectedBlock, state.workingGrid]);
 
     useEffect(() => {
         create();
@@ -64,6 +77,16 @@ export const Grid: FC = () => {
     useMousetrap('down', moveDown);
     useMousetrap('left', moveLeft);
     useMousetrap('right', moveRight);
+
+    useMousetrap('1', () => fill(1));
+    useMousetrap('2', () => fill(2));
+    useMousetrap('3', () => fill(3));
+    useMousetrap('4', () => fill(4));
+    useMousetrap('5', () => fill(5));
+    useMousetrap('6', () => fill(6));
+    useMousetrap('7', () => fill(7));
+    useMousetrap('8', () => fill(8));
+    useMousetrap('9', () => fill(9));
 
     return (
         <Container data-cy="grid-container">
