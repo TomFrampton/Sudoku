@@ -8,7 +8,7 @@ import * as serviceWorkerRegistration from 'core/serviceWorkerRegistration';
 import reportWebVitals from 'core/reportWebVitals';
 import { configureStore } from 'core/configure-store';
 
-import { Grid } from 'components';
+import { Grid, Numbers } from 'components';
 import { GlobalStyles, defaultTheme, Card, Content, Title } from 'styles';
 
 const store = configureStore();
@@ -21,7 +21,8 @@ ReactDOM.render(
                 <Content data-cy="content">
                     <Title data-cy="title">Tom's Sudoku App</Title>
                     <Card data-cy="card">
-                        <Grid></Grid>
+                        <Grid />
+                        <Numbers />
                     </Card>
                 </Content>
             </Provider>

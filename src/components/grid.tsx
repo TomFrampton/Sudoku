@@ -9,7 +9,7 @@ import { Grid as GridModel } from 'models';
 import { createGrid, IReducerState, selectBlock, fillBlock } from 'reducers';
 import { BLOCK_COORDS, INDEX, NUMBER } from 'typings/numbers';
 
-import { Block } from './block';
+import { Block } from 'components';
 
 
 interface IState {
