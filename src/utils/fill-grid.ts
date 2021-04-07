@@ -12,7 +12,7 @@ export function fillGrid(grid: Grid) {
     fillBlock(grid, 0);
 }
 
-export function fillBlock(grid: Grid, index: number) {
+function fillBlock(grid: Grid, index: number) {
     const row = Math.floor(index / 9) as INDEX;
     const col = index % 9 as INDEX;
 

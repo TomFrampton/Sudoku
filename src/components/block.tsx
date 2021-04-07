@@ -18,8 +18,8 @@ interface IState {
 }
 
 export const Block: FC<IProps> = ({ rowIndex, colIndex }) => {
-    const state = useSelector<IReducerState, IState>(({ grid, selectedBlock }) => ({
-        value: grid ? grid.getValue(rowIndex, colIndex) : 0,
+    const state = useSelector<IReducerState, IState>(({ workingGrid, selectedBlock }) => ({
+        value: workingGrid ? workingGrid.getValue(rowIndex, colIndex) : 0,
         isActive: !!selectedBlock && selectedBlock.rowIndex === rowIndex && selectedBlock.colIndex === colIndex
     }));
 

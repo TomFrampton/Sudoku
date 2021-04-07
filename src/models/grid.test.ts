@@ -57,4 +57,33 @@ describe('grid', () => {
             expect(grid.isInRow(8, 6)).toBeFalsy();
         });
     });
+
+    describe('clone', () => {
+        it('should have same values as original grid', () => {
+            const original = new Grid(gridValues());
+            const clone = original.clone();
+
+            for (let r = 0 as INDEX; r < 9; r++) {
+                for (let c = 0 as INDEX; c < 9; c++) {
+                    expect(clone.getValue(r, c)).toEqual(original.getValue(r, c));
+                }
+            }
+        });
+
+        it('should create an entirely new Grid object', () => {
+            const original = new Grid(gridValues());
+            const clone = original.clone();
+
+            expect(clone).not.toBe(original);
+        });
+
+        it('should create an entirely new grid 2D array under the hood', () => {
+            const original = new Grid(gridValues());
+            const clone = original.clone();
+
+            clone.setValue(0, 0, 0);
+
+            expect(original.getValue(0, 0)).not.toEqual(0);
+        });
+    });
 });
