@@ -24,12 +24,8 @@ export const Grid: FC = () => {
     const create = useCallback(() => dispatch(createGrid()), [dispatch]);
 
     const fill = useCallback((inputtedNumber: NUMBER) => {
-        if (state.selectedBlock && state.workingGrid) {
-            const { rowIndex, colIndex } = state.selectedBlock;
-
-            if (state.workingGrid.getValue(rowIndex, colIndex) === 0) {
-                dispatch(fillBlock(state.selectedBlock, inputtedNumber));
-            }
+        if (state.selectedBlock && state.workingGrid && state.workingGrid.getValue(state.selectedBlock.rowIndex, state.selectedBlock.colIndex) === 0) {
+            dispatch(fillBlock(state.selectedBlock, inputtedNumber));
         }
     }, [dispatch, state.selectedBlock, state.workingGrid]);
 

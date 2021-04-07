@@ -14,13 +14,15 @@ interface IProps {
 
 interface IState {
     value: N;
-    isActive: boolean
+    isActive: boolean;
+    isUserInputtedValue: boolean
 }
 
 export const Block: FC<IProps> = ({ rowIndex, colIndex }) => {
-    const state = useSelector<IReducerState, IState>(({ workingGrid, selectedBlock }) => ({
+    const state = useSelector<IReducerState, IState>(({ challengeGrid, workingGrid, selectedBlock }) => ({
         value: workingGrid ? workingGrid.getValue(rowIndex, colIndex) : 0,
-        isActive: !!selectedBlock && selectedBlock.rowIndex === rowIndex && selectedBlock.colIndex === colIndex
+        isActive: !!selectedBlock && selectedBlock.rowIndex === rowIndex && selectedBlock.colIndex === colIndex,
+        isUserInputtedValue: !!challengeGrid && challengeGrid.getValue(rowIndex, colIndex) === 0
     }));
 
     const dispatch = useDispatch<Dispatch<AnyAction>>();
@@ -35,6 +37,7 @@ export const Block: FC<IProps> = ({ rowIndex, colIndex }) => {
         <Container
             data-cy={`grid-block-${rowIndex}-${colIndex}`}
             isActive={state.isActive}
+            isUserInputtedValue={state.isUserInputtedValue}
             onClick={handleClick}>
                 {(state && state.value) || ''}
         </Container>
@@ -42,11 +45,12 @@ export const Block: FC<IProps> = ({ rowIndex, colIndex }) => {
 }
 
 interface IContainerProps {
-    isActive?: boolean
+    isActive?: boolean;
+    isUserInputtedValue?: boolean;
 }
 
 const Container = styled.div<IContainerProps>`
-    ${({ isActive, theme }) => css`
+    ${({ isActive, isUserInputtedValue, theme }) => css`
         align-items: center;
         background-color: ${isActive ? theme.colours.blue : theme.colours.white};
         border: 1px solid ${theme.colours.black};
@@ -56,7 +60,7 @@ const Container = styled.div<IContainerProps>`
         flex-shrink: 0;
         flex-basis: 0;
         font-size: 20px;
-        font-weight: bold;
+        font-weight: ${isUserInputtedValue ? 'normal' : 'bold'};
         height: auto;
         justify-content: center;
         transition: ${theme.transition};
