@@ -14,12 +14,13 @@ import { Block } from 'components';
 
 interface IState {
     selectedBlock?: BLOCK_COORDS,
+    solvedGrid?: GridModel;
     workingGrid?: GridModel
 }
 
 export const Grid: FC = () => {
     const dispatch = useDispatch<Dispatch<AnyAction>>();
-    const state = useSelector<IReducerState, IState>(({ selectedBlock, workingGrid }) => ({ selectedBlock, workingGrid }));
+    const state = useSelector<IReducerState, IState>(({ selectedBlock, solvedGrid, workingGrid }) => ({ selectedBlock, solvedGrid, workingGrid }));
 
     const create = useCallback(() => dispatch(createGrid()), [dispatch]);
 
@@ -30,8 +31,10 @@ export const Grid: FC = () => {
     }, [dispatch, state.selectedBlock, state.workingGrid]);
 
     useEffect(() => {
-        create();
-    }, [create]);
+        if (!state.solvedGrid) {
+            create();
+        }
+    }, [create, state.solvedGrid]);
 
     function moveUp() {
         if (state.selectedBlock && state.selectedBlock.rowIndex > 0) {
